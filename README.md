@@ -26,3 +26,4 @@ _Users/Groups -> Create New User_
 Configure the server
 * _Server -> Server Settings -> Resource Policy_ set to "Never kick"
 * _Server -> Server Settings -> Offline Messages_ set to "Drop"
+* _Server -> Server Settings -> File Transfer Settings_ set to "Disabled"
