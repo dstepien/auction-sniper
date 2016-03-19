@@ -1,9 +1,8 @@
 package pl.dawidstepien.sniper;
 
-import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import java.awt.*;
 
 public class MainWindow extends JFrame {
 
@@ -27,7 +26,7 @@ public class MainWindow extends JFrame {
     setVisible(true);
   }
 
-  public void showsStatus(String status) {
+  public void showStatus(String status) {
     sniperStatus.setText(status);
   }
 }
