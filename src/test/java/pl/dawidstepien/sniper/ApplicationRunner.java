@@ -8,6 +8,8 @@ public class ApplicationRunner {
 
   public static final int TIMEOUT_IN_MILLISECONDS = 1000;
 
+  public static final String SNIPER_XMPP_ID = SNIPER_ID + "@localhost/Auction";
+
   private AuctionSniperDriver driver;
 
   public void startBiddingIn(final FakeAuctionServer auction) {
@@ -27,6 +29,10 @@ public class ApplicationRunner {
 
     driver = new AuctionSniperDriver(TIMEOUT_IN_MILLISECONDS);
     driver.showsSniperStatus(Main.STATUS_JOINING);
+  }
+
+  public void hasShownSniperIsBidding() {
+    driver.showsSniperStatus(Main.STATUS_BIDDING);
   }
 
   public void showsSniperHasLostAuction() {
