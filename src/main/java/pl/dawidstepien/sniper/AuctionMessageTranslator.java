@@ -68,13 +68,4 @@ public class AuctionMessageTranslator implements MessageListener {
       return messageBody.split(";");
     }
   }
-
-  private HashMap<String, String> unpackEventFrom(Message message) {
-    HashMap<String, String> event = new HashMap<>();
-    for(String element : message.getBody().split(";")) {
-      String[] pair = element.split(":");
-      event.put(pair[0].trim(), pair[1].trim());
-    }
-    return event;
-  }
 }
