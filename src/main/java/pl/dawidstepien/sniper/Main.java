@@ -1,12 +1,13 @@
 package pl.dawidstepien.sniper;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.*;
+
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-
-import javax.swing.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class Main {
 
@@ -23,6 +24,8 @@ public class Main {
   public static final String BID_COMMAND_FORMAT = "SOLVersion: 1.1; Event: BID; Amount: %d;";
 
   public static final String STATUS_WINNING = "Winning";
+
+  public static final String STATUS_WON = "Won";
 
   private MainWindow ui;
 
@@ -69,6 +72,7 @@ public class Main {
 
     chat.addMessageListener(
       new AuctionMessageTranslator(
+        connection.getUser(),
         new AuctionSniper(auction, new SniperStateDisplayer())
       )
     );
@@ -117,6 +121,11 @@ public class Main {
     @Override
     public void sniperWinning() {
       showStatus(Main.STATUS_WINNING);
+    }
+
+    @Override
+    public void sniperWon() {
+      showStatus(Main.STATUS_WON);
     }
 
     private void showStatus(final String status) {

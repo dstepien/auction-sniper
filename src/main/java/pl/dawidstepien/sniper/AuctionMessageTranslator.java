@@ -1,17 +1,22 @@
 package pl.dawidstepien.sniper;
 
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.packet.Message;
+import static pl.dawidstepien.sniper.AuctionEventListener.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.packet.Message;
+
 public class AuctionMessageTranslator implements MessageListener {
+
+  private final String sniperId;
 
   private AuctionEventListener listener;
 
-  public AuctionMessageTranslator(AuctionEventListener listener) {
+  public AuctionMessageTranslator(String sniperId, AuctionEventListener listener) {
+    this.sniperId = sniperId;
     this.listener = listener;
   }
 
@@ -23,7 +28,7 @@ public class AuctionMessageTranslator implements MessageListener {
     if("CLOSE".equals(eventType)) {
       listener.auctionClosed();
     } else if("PRICE".equals(eventType)) {
-      listener.currentPrice(event.currentPrice(), event.increment());
+      listener.currentPrice(event.currentPrice(), event.increment(), event.isFrom(sniperId));
     }
   }
 
@@ -66,6 +71,14 @@ public class AuctionMessageTranslator implements MessageListener {
 
     private static String[] fieldsIn(String messageBody) {
       return messageBody.split(";");
+    }
+
+    public PriceSource isFrom(String sniperId) {
+      return sniperId.equals(bidder()) ? PriceSource.FROM_SNIPER : PriceSource.FROM_OTHER_BIDDER;
+    }
+
+    private String bidder() {
+      return get("Bidder");
     }
   }
 }
